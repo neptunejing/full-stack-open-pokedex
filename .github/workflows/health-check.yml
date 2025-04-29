@@ -1,0 +1,20 @@
+name: Health Check
+
+on:
+  push:     # 👉 初始阶段，手动触发测试
+  # schedule:
+  #   - cron: '0 12 * * *'   # ✅ 后续改成每天中午 UTC 执行
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check deployed app health
+        uses: Jtalk/url-health-check-action@v4
+        with:
+          url: https://full-stack-open-pokedex-hidden-darkness-3799.fly.dev
+          max-attempts: 3
+          retry-delay: 5s
+          follow-redirect: true
+          expected-status: 200
